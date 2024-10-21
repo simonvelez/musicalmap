@@ -1,10 +1,10 @@
 create table completa (
 	list_num integer,
-	artist_name varchar(50),
-	track_name varchar(50),
+	artist_name varchar(5000),
+	track_name varchar(5000),
 	release_date integer,
 	genre varchar(10),
-	lyrics varchar (100),
+	lyrics varchar (1000000),
 	len integer,
 	dating float,
 	violence float,
@@ -28,7 +28,7 @@ create table completa (
 	instrumentalness float,
 	valence float,
 	energy float,
-	topic varchar (15),
+	topic varchar (1500),
 	age float
 );
 
