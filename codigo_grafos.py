@@ -13,38 +13,10 @@ import heapq
 
 
 
-
-
-
-
-df = pd.read_csv(r'bases_de_datos/tcc_ceds_music.csv')
+df = pd.read_csv(r'bases_de_datos/tcc_ceds_music140.csv')
 relacion1=df[["track_name","genre"]]
 #relacion2=df[["track_name","topic"]]
 #relacion3=df[["track_name","lyrics"]]
-
-
-#gm=nx.Graph()
-
-#creamos los nodos
-
-#for i in range(len(relacion1["track_name"])):
-#    gm.add_node(df.loc[i,"track_name"])
-
-#creamos las aristas 
-'''for i in range(len(df["track_name"])):
-    for j in range(i+1,len(df["track_name"])):
-        if relacion1.loc[i,"genre"] == relacion1.loc[j,"genre"]:
-            gm.add_edge(relacion1.loc[i,"track_name"],relacion1.loc[j,"track_name"])
-
-pos = nx.spring_layout(gm)
-print("Estado: Dibujando Aristas")
-nx.draw(gm, pos, with_labels=True, font_weight='bold')
-print("Estado: Mostrando")
-plt.show()
-print("Estado: Terminado")'''
-
-
-
 
 # Extraer columnas relevantes y limpiar la información
 nombre = df['track_name']
@@ -87,7 +59,7 @@ for i in range(len(nombre)):
 pos = nx.circular_layout(gm)
 #dibujar los nodos
 color_nodos = [gm.nodes[nodo]['color'] for nodo in gm.nodes]
-nx.draw_networkx_nodes(gm, pos, node_color=color_nodos, node_size= 700)
+nx.draw_networkx_nodes(gm, pos, node_color=color_nodos, node_size= 400)
 
 #dibujar las aristas
 nx.draw_networkx_edges(gm, pos, width=2, edge_color='black')
@@ -96,12 +68,11 @@ nx.draw_networkx_labels(gm, pos, font_size = 10, font_weight='bold')
 
 #las etiquetas de las aristas
 etiquetas= {(u,v): gm[u][v]['palabra'] for u, v in gm.edges}
-nx.draw_networkx_edge_labels(gm, pos, edge_labels=etiquetas, font_color='blue')
+nx.draw_networkx_edge_labels(gm, pos, edge_labels=etiquetas, font_color='blue', font_size = 8)
 
 
 
 print("Estado: Dibujando Aristas")
-#nx.draw(gm, pos, with_labels=True, font_weight='bold')
 print("Estado: Mostrando")
 plt.show()
 print("Estado: Terminado")
@@ -171,16 +142,6 @@ def bfs_ponderada(graph, start_node):
 
     return result
 
-"""
-dfs_result = dfs_explore(gm, nodo_inicial)
-print(dfs_result)
-"""
-
-'''''
-bfs_result = pd.DataFrame([(u,v) for u,v in bfs_explore(gm, nodo_inicial)],columns =['track_name','genre'])
-print(bfs_result)
-'''
-
 
 
 #-------------------------------------------------------------------
@@ -192,7 +153,7 @@ for i in range(len(genre)):
 # Crear el grafo de géneros
 gm_generos = nx.Graph()
 
-# Añadir nodos (géneros)
+# Añadir nodos 
 for gen in genero_palabras:
     gm_generos.add_node(gen)
 
@@ -220,13 +181,13 @@ plt.show()
 relaciones_generos_unicas = [(min(u, v), max(u, v), gm_generos[u][v]['weight']) for u, v in gm_generos.edges]
 
 # Convertir a DataFrame
-df_relaciones_unicas = pd.DataFrame(relaciones_generos_unicas, columns=['Género 1', 'Género 2', 'Palabras Comunes'])
+df_relaciones_unicas = pd.DataFrame(relaciones_generos_unicas, columns=['Género 1', 'Género 2', 'Palabras Comúnes'])
 
 # Imprimir el DataFrame
 print(df_relaciones_unicas)
 
-bfs_result_ponderada = bfs_ponderada(gm_generos, "jazz")  # Cambia "pop" por el nodo inicial deseado
-print("Orden de géneros por relación (búsqueda ponderada):")
+bfs_result_ponderada = bfs_ponderada(gm_generos, "hip hop")  # Se cambia el género por el nodo inicial deseado
+print("Orden de géneros por relación:")
 print(bfs_result_ponderada)
 
 
